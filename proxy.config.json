@@ -1,0 +1,10 @@
+{
+    "/": {
+        "target": "https://storage.googleapis.com",
+        "secure": true,
+        "pathRewrite": {
+            "^/": ""
+        },
+        "changeOrigin": true
+    }
+}

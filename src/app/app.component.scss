@@ -1,0 +1,52 @@
+.content-all{
+    margin-top: 30px;
+}
+
+.card{
+    box-shadow:#717171 0px 1px 6px -2px
+}
+.card-header{
+    background-color: #fff;
+}
+.line{
+    border-right: solid 2px #d8dce2;
+    position: relative;
+    right: 5px;
+}
+.check{
+    position: relative;
+    left: 10px;
+    top: 10px;
+    width: 20px;
+    height: 20px
+}
+.icon{
+    width: 16px;
+    height: 16px
+}
+span{
+    font-size: 14px;
+    padding:5px 10px 
+}
+
+table{
+    background-color: #f8f8f8;
+    margin-bottom: 0;    
+}
+.seta::before{
+    content: '';
+    width: 20px;
+    height: 20px;
+    width: 0px;
+    height: 0px;
+    position: absolute;
+    left: -10px;
+    top:15px;
+    border-top: 10px solid transparent;
+    border-bottom: 10px solid transparent;
+    border-right: 10px solid#fff;
+}
+
+.item{
+margin-bottom: 10px;
+}
