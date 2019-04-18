@@ -1,4 +1,4 @@
-# DitoDesafio
+# Dito Desafio
 
 Desafio para a vaga de Desenvolvedor Front-End
 
