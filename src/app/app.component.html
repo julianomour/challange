@@ -1,39 +1,29 @@
-The content below is only a placeholder and can be replaced.
-<!--
-<div class="container content-all">
-  <div class="row item" *ngFor="let item of comprou" >
-    <div class="col-xl-1 line">      
-        <span><img class="check" src="../assets/icons/check .svg" alt=""></span>
-    </div>
+<div class="container content-all line">
+  <div class="row item" *ngFor="let item of newArray">
+    
     <div class="col-xl-5">
-      <div class="card seta" style="">
+        <span><img class="check" src="../assets/icons/check .svg" alt=""></span>
+      <div class="card seta">
         <div class="card-header">
-            <span class=""></span>
-            <span><img class="icon" src="../assets/icons/calendar.svg" alt="">{{item.timestamp | date : 'd/M/yyyy' }}</span>
-            <span><img class="icon" src="../assets/icons/clock.svg" alt="">{{item.timestamp | date : 'H:mm'  }}</span>
-            <span><img class="icon" src="../assets/icons/place.svg" alt="">Patio Savassi</span>
-            <span><img class="icon" src="../assets/icons/money.svg" alt="">R${{item.revenue}}</span>
+            <span class="info"><img class="icon" src="../assets/icons/calendar.svg" alt=""><span class="data">{{item.timestamp | date : 'd/M/yyyy' }}</span></span>
+            <span class="info"><img class="icon" src="../assets/icons/clock.svg" alt=""><span class="data">{{item.timestamp | date : 'H:mm'  }}</span></span>
+            <span class="info"><img class="icon" src="../assets/icons/place.svg" alt=""><span class="data">{{item.store}}</span></span>
+            <span class="info"><img class="icon" src="../assets/icons/money.svg" alt=""><span class="data">{{item.revenue | currency }}</span></span>
         </div>          
           <table class="table">
             <thead>
               <tr>
                 <th scope="col">Produto</th>
-                <th scope="col">Preço</th>
+                <th scope="col" style="text-align: right;padding-right: 35px;">Preço</th>
               </tr>
             </thead>
-            <tbody >
-              <tr   >
-                <td>i.</td>
-                <td>R$100</td>
-              </tr>
-              <tr>
-                <td>Camisa</td>
-                <td>R$100</td>
+            <tbody>
+              <tr *ngFor="let i of item.items">
+                  <td >{{i.product_name}}</td>
+                  <td style="text-align: right;padding-right: 35px;">{{i.product_price | currency}}</td>
               </tr>
             </tbody>
           </table>
       </div>
     </div>
   </div>
-
--->

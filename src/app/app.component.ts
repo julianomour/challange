@@ -12,15 +12,14 @@ export class AppComponent {
   title = 'dito-desafio';
 
   arrayData
-  modifyData = new Array()
-  obj = {
-    revenue: '',
-    timestamp: '',
-    id: '',
-    store: '',
-    item: []
-  }
+  storeData = []
+  productData = []
+  newArray = []
 
+  auxObj = {
+    name: '',
+    price: ''
+  }
 
   constructor(private service: ApiService) {
     this.getDataApi()
@@ -30,44 +29,60 @@ export class AppComponent {
 
   getDataApi = async () => {
     this.arrayData = await this.service.getData().then(data => data);
-    await this.organizeCompra(this.arrayData.events)
-    // await this.organizeCompraProduto(this.arrayData.events)
+    await this.organizeLocal(this.arrayData.events)
+    await this.organizeItem(this.arrayData.events)
+    await this.organizeCompraProduto(this.storeData, this.productData)
   }
 
 
-  async organizeCompra(data) {
-    data.filter((element, i) => {
-      if (element.event === 'comprou') {
-        this.obj.revenue = element.revenue;
-        this.obj.timestamp = element.timestamp;
-        element.custom_data.filter(data => {
-          if (data.key === 'transaction_id') {
-            this.obj.id = data.value;
-          }
-          if (data.key === 'store_name') {
-            this.obj.store = data.value;
-          }
-        });
-        this.modifyData.push(this.obj)
+  async organizeLocal(data) {
+    this.storeData = data.filter((element, i) => {
+      if (element.event == 'comprou') {
+        return element
       }
     });
-    console.log(': AppComponent -> organizeCompra -> this.modifyData', this.modifyData)
   }
 
-  // async organizeCompraProduto(data) {
-  //   let aux = data.filter((element, i) => {
-  //     if (element.event === 'comprou-produto') {
-  //       this.modifyData.forEach(data => {
-  //         element.custom_data.filter(el => {
-  //           if (el.value == data.id) {
-  //             data.item.push(element.custom_data)
-  //             console.log('ddfs', data)
-  //             return data
-  //           }
-  //         });
-  //       })
-  //     }
-  //   });
-  //   console.log(': organizeCompraProduto -> aux', aux)
-  // }
+
+  async organizeItem(data) {
+    this.productData = data.filter(element => element.event == 'comprou-produto')
+  }
+
+  async organizeCompraProduto(store, item) {
+
+    let obj = [];
+    this.newArray = store.filter(s => {
+
+      s.items = []
+      let storeId = this.getIdData('transaction_id', s)
+
+      let store = this.getIdData('store_name', s);
+      s.store = store[0].value
+
+      item.forEach((i) => {
+
+        let itemId = this.getIdData('transaction_id', i);
+
+        if (itemId[0].value == storeId[0].value) {
+          i.custom_data.forEach(element => {
+            if (element.key == 'product_name') {
+              i.product_name = element.value
+            }
+            if (element.key == 'product_price') {
+              i.product_price = element.value
+            }
+          });
+          s.items.push(i)
+        }
+
+      });
+      this.newArray.push(s);
+      return this.newArray;
+    });
+  }
+
+
+  getIdData(item, data) {
+    return data.custom_data.filter(data => data.key == item);
+  }
 }
